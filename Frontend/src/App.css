@@ -1,21 +1,90 @@
-/* App.css */
-.App {
-  background: radial-gradient(circle, #2c3e50 0%, #000000 100%);
-  background-attachment: fixed;
+/* 1. CONFIGURACIÓN DEL LAYOUT PRINCIPAL */
+.app-layout {
+  display: flex;
   min-height: 100vh;
-  text-align: center;
-  padding: 20px;
+  /* Mezclamos tu fondo radial con el tono oscuro de la referencia */
+  background: radial-gradient(circle, #1a1d23 0%, #0f1115 100%);
+  background-attachment: fixed;
+  color: white;
+  font-family: 'Inter', sans-serif;
 }
 
-/* AQUÍ VA EL CÓDIGO DEL TÍTULO */
+/* 2. CONTENIDO PRINCIPAL (DERECHA) */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
 
-h1 {
-  letter-spacing: 5px;
+/* 3. HEADER PROFESIONAL */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #2d3139;
+  padding-bottom: 20px;
+}
+
+/* Tu estilo de título plateado aplicado al Dashboard */
+.header-info h1 {
+  letter-spacing: 3px;
   text-transform: uppercase;
   background: linear-gradient(to bottom, #ffffff, #888);
-  -webkit-background-clip: text; /* Para Chrome/Safari */
-  background-clip: text;         /* <--- ESTA ES LA QUE TE PIDE AÑADIR */
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 50px;
-  font-size: 3rem;
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.header-info p {
+  color: #94a3b8;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+/* 4. EL BOTÓN "ABRIR SOBRE" (Estilo referencia) */
+.boton-sobre {
+  background-color: #ffcc00; /* Amarillo neón de la referencia */
+  color: #000;
+  border: none;
+  padding: 12px 28px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.boton-sobre:hover {
+  background-color: #ffdb4d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+}
+
+.boton-sobre:disabled {
+  background-color: #2d3139;
+  color: #64748b;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 5. GRID DE CARTAS (Ajustado para que se vea como en la web pro) */
+.cartas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  width: 100%;
+}
+
+/* Eliminamos estilos de la clase .App vieja para evitar conflictos */
+.App {
+  text-align: center;
 }

@@ -1,51 +1,61 @@
 import React, { useState } from 'react';
 import './App.css';
 import Carta from './components/Carta.jsx';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [misCartas, setMisCartas] = useState([]);
   const [cargando, setCargando] = useState(false);
 
-  // URL de tu Backend en Render
   const API_URL = "https://tcg-project.onrender.com/api/cartas/random/";
 
   const abrirSobre = async () => {
     setCargando(true);
     try {
-      // Pedimos las cartas a Django en la nube
       const response = await fetch(API_URL);
       if (!response.ok) throw new Error("Error en el servidor");
       
       const nuevasCartas = await response.json();
-      
-      // Agregamos las cartas nuevas al principio de la lista
       setMisCartas([...nuevasCartas, ...misCartas]);
     } catch (error) {
       console.error("No se pudieron obtener las cartas:", error);
-      alert("El servidor de Render está despertando, intenta de nuevo en 30 segundos.");
+      alert("El servidor está despertando, intenta de nuevo en unos segundos.");
     } finally {
       setCargando(false);
     }
   };
 
   return (
-    <div className="App">
-      <header>
-        <h1>TCG COLLECTOR</h1>
-        <button 
-          onClick={abrirSobre} 
-          className="boton-sobre"
-          disabled={cargando}
-        >
-          {cargando ? "ABRIENDO..." : "ABRIR SOBRE (3 CARTAS) 📦"}
-        </button>
-      </header>
+    <div className="app-layout">
+      {/* 1. Barra Lateral Fija */}
+      <Sidebar />
 
-      <div className="cartas-grid">
-        {misCartas.map((c, index) => (
-          <Carta key={index} {...c} />
-        ))}
-      </div>
+      {/* 2. Contenido Principal */}
+      <main className="main-content">
+        <header className="main-header">
+          <div className="header-info">
+            <h1>TCG COLLECTOR</h1>
+            <p>Gestiona tu colección y prepárate para el combate</p>
+          </div>
+          
+          <button 
+            onClick={abrirSobre} 
+            className="boton-sobre"
+            disabled={cargando}
+          >
+            {cargando ? "ABRIENDO..." : "ABRIR SOBRE (3 CARTAS) 📦"}
+          </button>
+        </header>
+
+        {/* 3. Rejilla de Cartas */}
+        <section className="cartas-container">
+          <div className="cartas-grid">
+            {misCartas.map((c, index) => (
+              <Carta key={index} {...c} />
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
