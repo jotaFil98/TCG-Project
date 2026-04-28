@@ -2,17 +2,25 @@ import React from 'react';
 import './Carta.css';
 
 const Carta = ({ nombre, rareza, imagen, atk, hp, energia }) => {
-  const rarezaClase = rareza.toLowerCase();
+  // Convertimos la rareza a minúsculas para el CSS
+  const rarezaClase = rareza ? rareza.toLowerCase() : 'comun';
 
-  // Construimos la URL completa que apunta a tu Backend en Render
-  // Si la imagen viene como "Allmi_legendario.png", esto buscará la foto en tu servidor
-  const urlImagen = `https://tcg-project.onrender.com/static/cartas/${imagen}`;
+  // Como las fotos están en la carpeta 'public/cartas' de tu Frontend,
+  // la ruta debe ser relativa a la raíz del sitio.
+  const urlImagen = `/cartas/${imagen}`;
 
   return (
     <div className={`carta-container ${rarezaClase}`}>
       <div className="carta-imagen">
-        {/* Cambiamos el require por un src normal */}
-        <img src={urlImagen} alt={nombre} onError={(e) => e.target.src = 'https://via.placeholder.com/150'} />
+        {/* Ahora el src apunta a tu propia carpeta public de Vercel */}
+        <img 
+          src={urlImagen} 
+          alt={nombre} 
+          onError={(e) => {
+            e.target.onerror = null; 
+            e.target.src = 'https://via.placeholder.com/150?text=No+Foto';
+          }} 
+        />
       </div>
 
       <div className="efecto-overlay"></div>
