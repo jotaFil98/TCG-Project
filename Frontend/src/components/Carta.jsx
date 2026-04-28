@@ -2,20 +2,21 @@ import React from 'react';
 import './Carta.css';
 
 const Carta = ({ nombre, rareza, imagen, atk, hp, energia }) => {
-  // Convertimos la rareza a minúsculas para que coincida con el CSS
   const rarezaClase = rareza.toLowerCase();
+
+  // Construimos la URL completa que apunta a tu Backend en Render
+  // Si la imagen viene como "Allmi_legendario.png", esto buscará la foto en tu servidor
+  const urlImagen = `https://tcg-project.onrender.com/static/cartas/${imagen}`;
 
   return (
     <div className={`carta-container ${rarezaClase}`}>
-      {/* Capa 1: Tu diseño completo (Marco + Ilustración) */}
       <div className="carta-imagen">
-        <img src={require(`../assets/${imagen}`)} alt={nombre} />
+        {/* Cambiamos el require por un src normal */}
+        <img src={urlImagen} alt={nombre} onError={(e) => e.target.src = 'https://via.placeholder.com/150'} />
       </div>
 
-      {/* Capa 2: Efectos especiales (Brillos/Hologramas) */}
       <div className="efecto-overlay"></div>
 
-      {/* Capa 3: Datos dinámicos (Texto sobre la imagen) */}
       <div className="carta-info">
         <h3 className="carta-nombre">{nombre}</h3>
         <div className="carta-stats">
