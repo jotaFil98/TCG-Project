@@ -2,23 +2,25 @@ import React from 'react';
 import './Carta.css';
 
 const Carta = ({ nombre, rareza, imagen, atk, hp, energia }) => {
-  // Convertimos la rareza a minúsculas para el CSS
   const rarezaClase = rareza ? rareza.toLowerCase() : 'comun';
 
-  // Como las fotos están en la carpeta 'public/cartas' de tu Frontend,
-  // la ruta debe ser relativa a la raíz del sitio.
-  const urlImagen = `/cartas/${imagen}`;
+  // LOG PARA DETECTIVE: Presiona F12 en el navegador para ver esto
+  console.log("Datos recibidos de Django -> Nombre:", nombre, "| Imagen:", imagen);
+
+  // Limpiamos el nombre de la imagen por si acaso
+  const nombreImagenLimpio = imagen ? imagen.trim() : "";
+  const urlImagen = `/cartas/${nombreImagenLimpio}`;
 
   return (
     <div className={`carta-container ${rarezaClase}`}>
       <div className="carta-imagen">
-        {/* Ahora el src apunta a tu propia carpeta public de Vercel */}
         <img 
           src={urlImagen} 
           alt={nombre} 
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Forzamos el tamaño
           onError={(e) => {
-            e.target.onerror = null; 
-            e.target.src = 'https://via.placeholder.com/150?text=No+Foto';
+            console.error("Error cargando esta URL:", urlImagen);
+            e.target.src = 'https://via.placeholder.com/150?text=Error+Ruta';
           }} 
         />
       </div>
