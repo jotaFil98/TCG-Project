@@ -1,15 +1,13 @@
 import React from 'react';
 import './Carta.css';
 
-const Carta = ({ nombre, rareza, imagen, atk, hp, energia }) => {
+// Cambié "imagen" por "imagen_url" que es como lo tienes en el Admin de Django
+const Carta = ({ nombre, rareza, imagen_url, atk, hp, energia }) => {
   const rarezaClase = rareza ? rareza.toLowerCase() : 'comun';
 
-  // LOG PARA DETECTIVE: Presiona F12 en el navegador para ver esto
-  console.log("Datos recibidos de Django -> Nombre:", nombre, "| Imagen:", imagen);
-
-  // Limpiamos el nombre de la imagen por si acaso
-  const nombreImagenLimpio = imagen ? imagen.trim() : "";
-  const urlImagen = `/cartas/${nombreImagenLimpio}`;
+  // Usamos imagen_url aquí también
+  const nombreImagen = imagen_url ? imagen_url.trim() : "";
+  const urlImagen = `/cartas/${nombreImagen}`;
 
   return (
     <div className={`carta-container ${rarezaClase}`}>
@@ -17,10 +15,10 @@ const Carta = ({ nombre, rareza, imagen, atk, hp, energia }) => {
         <img 
           src={urlImagen} 
           alt={nombre} 
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Forzamos el tamaño
           onError={(e) => {
-            console.error("Error cargando esta URL:", urlImagen);
-            e.target.src = 'https://via.placeholder.com/150?text=Error+Ruta';
+            // Si falla, intentamos sin el .png por si acaso
+            console.log("No encontré:", urlImagen);
+            e.target.src = 'https://placehold.co/150?text=Error+Foto';
           }} 
         />
       </div>
