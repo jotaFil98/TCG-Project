@@ -1,0 +1,21 @@
+/* App.css */
+.App {
+  background: radial-gradient(circle, #2c3e50 0%, #000000 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+/* AQUÍ VA EL CÓDIGO DEL TÍTULO */
+
+h1 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #ffffff, #888);
+  -webkit-background-clip: text; /* Para Chrome/Safari */
+  background-clip: text;         /* <--- ESTA ES LA QUE TE PIDE AÑADIR */
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 50px;
+  font-size: 3rem;
+}
