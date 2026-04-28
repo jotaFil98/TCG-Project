@@ -53,7 +53,7 @@ class Carta(models.Model):
     costo_uso = models.IntegerField(default=1, help_text="Energía para activar soporte")
 
     # Visual
-    imagen_url = models.URLField(max_length=500, help_text="URL del arte del personaje")
+    imagen_url = models.CharField(max_length=500, help_text="Ruta: /cartas/nombre.png")
 
     def __str__(self):
         return f"{self.nombre} ({self.rareza})"
