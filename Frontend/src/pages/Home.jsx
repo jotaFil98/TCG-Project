@@ -3,54 +3,58 @@ import { Link } from 'react-router-dom';
 import Carta from '../components/Carta.jsx';
 
 function Home() {
-    const [misCartas, setMisCartas] = useState([]);
+    // Estado persistente: Se carga de localStorage al iniciar
+    const [gameData, setGameData] = useState(() => {
+        const saved = localStorage.getItem('tcgGameData');
+        return saved ? JSON.parse(saved) : { 
+            credits: 1000, 
+            xp: 0, 
+            collection: [] 
+        };
+    });
+
+    // Guardado automático cada vez que gameData cambia
+    useEffect(() => {
+        localStorage.setItem('tcgGameData', JSON.stringify(gameData));
+    }, [gameData]);
+
     const [cargando, setCargando] = useState(false);
     const [tiempoRestante, setTiempoRestante] = useState(0);
     const [isOpening, setIsOpening] = useState(false);
     const [cartasRecibidas, setCartasRecibidas] = useState([]);
-    
-    // ¡AQUÍ ESTABA EL PROBLEMA! Faltaba esta línea:
     const [flipped, setFlipped] = useState([false, false, false, false]);
 
-    // Definición única y correcta de colecciones
     const colecciones = [
-        {
-            id: 1,
-            nombre: "Boku no hero coleccion",
-            total: 30,
-            actuales: 0,
-            img: "/assets/colecciones/coleccion1.png"
-        },
-        {
-            id: 2,
-            nombre: "Isa colecttion",
-            total: 20,
-            actuales: 0,
-            img: "/assets/colecciones/coleccion2.png"
-        },
-        {
-            id: 3,
-            nombre: "Ana colecttion",
-            total: 20,
-            actuales: 0,
-            img: "/assets/colecciones/coleccion3.png"
-        },
-        {
-            id: 4,
-            nombre: "Jhons Randoms",
-            total: 30,
-            actuales: 0,
-            img: "/assets/colecciones/coleccion4.png"
-        }
+        { id: 1, nombre: "Boku no hero coleccion", total: 30, actuales: 0, img: "/assets/colecciones/coleccion1.png" },
+        { id: 2, nombre: "Isa colecttion", total: 20, actuales: 0, img: "/assets/colecciones/coleccion2.png" },
+        { id: 3, nombre: "Ana colecttion", total: 20, actuales: 0, img: "/assets/colecciones/coleccion3.png" },
+        { id: 4, nombre: "Jhons Randoms", total: 30, actuales: 0, img: "/assets/colecciones/coleccion4.png" }
     ];
 
     const abrirSobre = () => {
+        // Validar créditos
+        if (gameData.credits < 100) {
+            alert("¡No tienes suficientes créditos!");
+            return;
+        }
+
         setCargando(true);
-        // Simulamos que recibimos 4 cartas después de 2 segundos
         setTimeout(() => {
             setCargando(false);
-            setIsOpening(true); // Abrimos el modal
-            setCartasRecibidas([1, 2, 3, 4]); // Aquí luego pondrás tus cartas reales
+            setIsOpening(true);
+            
+            // Simulamos 4 cartas aleatorias
+            const nuevasCartas = [Math.floor(Math.random()*100), Math.floor(Math.random()*100), Math.floor(Math.random()*100), Math.floor(Math.random()*100)];
+            
+            // Actualizamos el estado persistente
+            setGameData(prev => ({
+                ...prev,
+                credits: prev.credits - 100, // Descontar 100 créditos
+                xp: prev.xp + 10,           // Sumar 10 XP
+                collection: [...prev.collection, ...nuevasCartas] // Agregar a colección
+            }));
+
+            setCartasRecibidas(nuevasCartas);
             setTiempoRestante(300);
         }, 2000);
     };
@@ -74,11 +78,12 @@ function Home() {
         setFlipped(newFlipped);
     };
 
-
     return (
         <main className="home-dashboard">
             <div className="stats-bar">
-                <span>Cartas: {misCartas.length}</span>
+                <span>Créditos: {gameData.credits} 💰</span>
+                <span>XP: {gameData.xp} ⭐</span>
+                <span>Cartas: {gameData.collection.length} 🃏</span>
                 <span>Colecciones: {colecciones.length}</span>
             </div>
 
@@ -91,11 +96,11 @@ function Home() {
                 <button
                     onClick={abrirSobre}
                     className="boton-sobre-epic"
-                    disabled={cargando || tiempoRestante > 0}
+                    disabled={cargando || tiempoRestante > 0 || gameData.credits < 100}
                 >
                     {tiempoRestante > 0
                         ? `DISPONIBLE EN ${formatearTiempo(tiempoRestante)}`
-                        : (cargando ? "ABRIENDO..." : "ABRIR SOBRE COMÚN 📦")}
+                        : (cargando ? "ABRIENDO..." : "ABRIR SOBRE (100 💰)")}
                 </button>
             </header>
 
@@ -112,8 +117,6 @@ function Home() {
                     {colecciones.map(col => (
                         <Link to={`/coleccion/${col.id}`} key={col.id} className="collection-card">
                             <img src={col.img} alt={col.nombre} className="collection-image" />
-
-                            {/* Todo el texto debe estar dentro de este div */}
                             <div className="collection-info">
                                 <h3>{col.nombre}</h3>
                                 <p>{col.actuales}/{col.total} cartas</p>
@@ -136,7 +139,7 @@ function Home() {
                                 >
                                     <div className="flip-card-inner">
                                         <div className="card-front">?</div>
-                                        <div className="card-back">CARTA {c}</div> {/* Aquí irá tu componente Carta */}
+                                        <div className="card-back">ID: {c}</div> 
                                     </div>
                                 </div>
                             ))}
