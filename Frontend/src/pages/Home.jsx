@@ -6,9 +6,11 @@ function Home() {
   const [misCartas, setMisCartas] = useState([]);
   const [cargando, setCargando] = useState(false);
   const [tiempoRestante, setTiempoRestante] = useState(0);
+  const [isOpening, setIsOpening] = useState(false);
+  const [cartasRecibidas, setCartasRecibidas] = useState([]);
 
   // Definición única y correcta de colecciones
- const colecciones = [
+  const colecciones = [
     { 
       id: 1, 
       nombre: "Boku no hero coleccion", 
@@ -41,28 +43,14 @@ function Home() {
 
   const abrirSobre = () => {
     setCargando(true);
+    // Simulamos que recibimos 4 cartas después de 2 segundos
     setTimeout(() => {
       setCargando(false);
+      setIsOpening(true); // Abrimos el modal
+      setCartasRecibidas([1, 2, 3, 4]); // Aquí luego pondrás tus cartas reales
       setTiempoRestante(300);
     }, 2000);
   };
-
-    // Agrega estos estados junto a tus otros useState
-    const [isOpening, setIsOpening] = useState(false);
-    const [cartasRecibidas, setCartasRecibidas] = useState([]);
-
-    // Modifica tu función abrirSobre para simular la apertura
-    const abrirSobre = () => {
-    setCargando(true);
-    
-    // Simulamos que recibimos 4 cartas después de 2 segundos
-    setTimeout(() => {
-        setCargando(false);
-        setIsOpening(true); // Abrimos el modal
-        setCartasRecibidas([1, 2, 3, 4]); // Aquí luego pondrás tus cartas reales
-        setTiempoRestante(300);
-    }, 2000);
-    };
 
   useEffect(() => {
     if (tiempoRestante > 0) {
@@ -122,8 +110,9 @@ function Home() {
                 </div>
                 </Link>
             ))}
-            </div>
+        </div>
       </section>
+
       {isOpening && (
         <div className="pack-overlay">
             <div className="pack-modal">
@@ -134,7 +123,7 @@ function Home() {
                     {/* Aquí luego pondrás el componente <Carta /> */}
                     ?
                 </div>
-        ))}
+            ))}
             </div>
             <button 
                 className="boton-cerrar" 
@@ -145,7 +134,7 @@ function Home() {
             </button>
             </div>
         </div>
-        )}
+      )}
     </main>
   );
 }
