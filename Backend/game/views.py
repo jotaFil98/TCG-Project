@@ -4,6 +4,19 @@ from django.http import JsonResponse
 from .models import Carta
 import random
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Carta
+from .serializers import CartaSerializer
+
+@api_view(['GET'])
+def listar_cartas(request):
+    cartas = Carta.objects.all()
+    serializer = CartaSerializer(cartas, many=True)
+    return Response(serializer.data)
+
+
+
 def obtener_cartas_aleatorias(request):
     # Traemos todas las cartas que registraste en el Admin
     todas_las_cartas = list(Carta.objects.all())
