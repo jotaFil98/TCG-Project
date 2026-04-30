@@ -292,9 +292,15 @@ body {
 /* Imagen de portada */
 .collection-image {
   width: 100%;
-  height: 200px; /* Tamaño fijo para todas las portadas */
-  object-fit: cover; /* Recorta la imagen para que llene el espacio perfectamente */
+  height: 200px;
+  object-fit: cover;
   display: block;
+  /* Añadimos esta línea para que el movimiento sea suave */
+  transition: transform 0.5s ease; 
+}
+
+.collection-card:hover .collection-image {
+  transform: scale(1.1); /* Hace que la imagen crezca un 10% */
 }
 
 /* Espacio para el texto abajo */
