@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // 1. Importamos Link
 import { Home, User, ShoppingCart, Sword, Settings } from 'lucide-react';
-import './Sidebar.css'; // Crearemos este CSS ahora
+import './Sidebar.css';
 
 const Sidebar = () => {
   return (
@@ -11,14 +12,25 @@ const Sidebar = () => {
       </div>
       
       <nav className="sidebar-nav">
-        <button className="nav-item active"><Home size={20}/> <span>Inicio</span></button>
-        <button className="nav-item"><User size={20}/> <span>Perfil</span></button>
-        <button className="nav-item"><ShoppingCart size={20}/> <span>Tienda</span></button>
-        <button className="nav-item"><Sword size={20}/> <span>Combate</span></button>
+        {/* 2. Cambiamos 'button' por 'Link' y usamos 'to' en lugar de onClick */}
+        <Link to="/" className="nav-item active">
+            <Home size={20}/> <span>Inicio</span>
+        </Link>
+        <Link to="/perfil" className="nav-item">
+            <User size={20}/> <span>Perfil</span>
+        </Link>
+        <Link to="/tienda" className="nav-item">
+            <ShoppingCart size={20}/> <span>Tienda</span>
+        </Link>
+        <Link to="/batalla" className="nav-item">
+            <Sword size={20}/> <span>Combate</span>
+        </Link>
       </nav>
 
       <div className="sidebar-footer">
-        <button className="nav-item"><Settings size={20}/> <span>Ajustes</span></button>
+        <Link to="/ajustes" className="nav-item">
+            <Settings size={20}/> <span>Ajustes</span>
+        </Link>
       </div>
     </aside>
   );
