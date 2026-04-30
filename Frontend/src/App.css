@@ -355,3 +355,68 @@ body {
   color: #ffcc00;
   font-size: 24px;
 }
+
+/* --- Botón Guardar --- */
+.btn-save-collection {
+  background: linear-gradient(135deg, #ffcc00, #ffaa00);
+  border: none;
+  color: #1a1d23;
+  padding: 12px 30px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  margin-top: 30px;
+}
+
+.btn-save-collection:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+}
+
+/* --- Efecto Flip 3D --- */
+.flip-card {
+  perspective: 1000px; /* Distancia del observador */
+  width: 120px;
+  height: 180px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Oculta la parte trasera cuando se voltea */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* El frente es el dorso de la carta */
+.card-front {
+  background: #333;
+  border: 2px solid #ffcc00;
+  color: white;
+}
+
+/* La parte de atrás es la carta real */
+.card-back {
+  background: #fff;
+  transform: rotateY(180deg);
+  color: black;
+}
