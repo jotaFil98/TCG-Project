@@ -8,6 +8,19 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Carta
 from .serializers import CartaSerializer
+from django.db import connection # Agrega esto arriba con los otros imports
+
+@api_view(['GET'])
+def listar_cartas(request):
+    # 1. Ver qué tablas ve Django en la base de datos
+    print("DEBUG TABLAS:", connection.introspection.table_names())
+    
+    # 2. Ver cuántas cartas hay realmente
+    todas = Carta.objects.all()
+    print("DEBUG CANTIDAD:", todas.count())
+    
+    serializer = CartaSerializer(todas, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def listar_cartas(request):
