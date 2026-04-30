@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import '../App.css';
-import Carta from './components/Carta.jsx';
-import Sidebar from './components/Sidebar';
+import '../App.css'; 
+import Carta from '../components/Carta.jsx'; 
 
 function App() {
   const [misCartas, setMisCartas] = useState([]);
