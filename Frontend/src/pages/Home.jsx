@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import '../App.css'; 
+import React, { useState } from 'react'; 
 import Carta from '../components/Carta.jsx'; 
 
 function App() {
