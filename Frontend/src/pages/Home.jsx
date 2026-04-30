@@ -8,7 +8,7 @@ function Home() {
   const [tiempoRestante, setTiempoRestante] = useState(0);
 
   // Definición única y correcta de colecciones
-  const colecciones = [
+ const colecciones = [
     { 
       id: 1, 
       nombre: "Boku no hero coleccion", 
@@ -23,7 +23,6 @@ function Home() {
       actuales: 0, 
       img: "/assets/colecciones/coleccion2.jpg" 
     },
-    
     { 
       id: 3, 
       nombre: "Ana colecttion", 
@@ -31,15 +30,13 @@ function Home() {
       actuales: 0, 
       img: "/assets/colecciones/coleccion3.jpg" 
     },
-
     { 
       id: 4, 
       nombre: "Jhons Randoms", 
       total: 30, 
       actuales: 0, 
       img: "/assets/colecciones/coleccion4.jpg" 
-    },
-
+    }
   ];
 
   const abrirSobre = () => {
