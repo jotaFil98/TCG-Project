@@ -8,6 +8,9 @@ function Home() {
     const [tiempoRestante, setTiempoRestante] = useState(0);
     const [isOpening, setIsOpening] = useState(false);
     const [cartasRecibidas, setCartasRecibidas] = useState([]);
+    
+    // ¡AQUÍ ESTABA EL PROBLEMA! Faltaba esta línea:
+    const [flipped, setFlipped] = useState([false, false, false, false]);
 
     // Definición única y correcta de colecciones
     const colecciones = [
