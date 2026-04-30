@@ -1,4 +1,17 @@
 /* 1. CONFIGURACIÓN DEL LAYOUT PRINCIPAL */
+
+/* Esto elimina el margen blanco */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0f1115;
+  overflow-x: hidden;
+}
+
 .app-layout {
   display: flex;
   min-height: 100vh;
@@ -7,6 +20,22 @@
   background-attachment: fixed;
   color: white;
   font-family: 'Inter', sans-serif;
+}
+
+/* RESPONSIVE: Esto va FUERA de .app-layout */
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column; /* Apila menú arriba, contenido abajo */
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #2d3139;
+  }
+  .main-content {
+    padding: 20px;
+  }
 }
 
 /* 2. CONTENIDO PRINCIPAL (DERECHA) */
