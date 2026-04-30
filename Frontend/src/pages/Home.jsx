@@ -1,40 +1,75 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
+import { Link } from 'react-router-dom'; 
 import Carta from '../components/Carta.jsx'; 
 
 function Home() {
   const [misCartas, setMisCartas] = useState([]);
   const [cargando, setCargando] = useState(false);
+  const [tiempoRestante, setTiempoRestante] = useState(0);
 
-  const API_URL = "https://tcg-project.onrender.com/api/cartas/random/";
+  // Definición única y correcta de colecciones
+  const colecciones = [
+    { 
+      id: 1, 
+      nombre: "Boku no hero coleccion", 
+      total: 30, 
+      actuales: 0, 
+      img: "/assets/colecciones/portada1.jpg" 
+    },
+    { 
+      id: 2, 
+      nombre: "Isa colecttion", 
+      total: 20, 
+      actuales: 0, 
+      img: "/assets/colecciones/portada2.jpg" 
+    },
+    
+    { 
+      id: 3, 
+      nombre: "Ana colecttion", 
+      total: 20, 
+      actuales: 0, 
+      img: "/assets/colecciones/portada3.jpg" 
+    },
 
-  const abrirSobre = async () => {
+    { 
+      id: 4, 
+      nombre: "Jhons Randoms", 
+      total: 30, 
+      actuales: 0, 
+      img: "/assets/colecciones/portada4.jpg" 
+    },
+
+  ];
+
+  const abrirSobre = () => {
     setCargando(true);
-    try {
-      const response = await fetch(API_URL);
-      if (!response.ok) throw new Error("Error en el servidor");
-      
-      const nuevasCartas = await response.json();
-      setMisCartas([...nuevasCartas, ...misCartas]);
-    } catch (error) {
-      console.error("No se pudieron obtener las cartas:", error);
-      alert("El servidor está despertando, intenta de nuevo en unos segundos.");
-    } finally {
+    setTimeout(() => {
       setCargando(false);
+      setTiempoRestante(300);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    if (tiempoRestante > 0) {
+      const timer = setInterval(() => setTiempoRestante(t => t - 1), 1000);
+      return () => clearInterval(timer);
     }
+  }, [tiempoRestante]);
+
+  const formatearTiempo = (seg) => {
+    const mins = Math.floor(seg / 60);
+    const secs = seg % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   };
 
   return (
     <main className="home-dashboard">
-      
-      {/* 1. Barra de Estadísticas (Nueva) */}
       <div className="stats-bar">
-        <div className="stat-item">
-          <span className="stat-label">Cartas Coleccionadas</span>
-          <span className="stat-value">{misCartas.length}</span>
-        </div>
+        <span>Cartas: {misCartas.length}</span>
+        <span>Colecciones: {colecciones.length}</span>
       </div>
 
-      {/* 2. Sección Hero (El gancho) */}
       <header className="hero-section">
         <div className="hero-content">
           <h1>TCG COLLECTOR</h1>
@@ -44,22 +79,36 @@ function Home() {
         <button 
           onClick={abrirSobre} 
           className="boton-sobre-epic"
-          disabled={cargando}
+          disabled={cargando || tiempoRestante > 0}
         >
-          {cargando ? "ABRIENDO..." : "ABRIR SOBRE (3 CARTAS) 📦"}
+          {tiempoRestante > 0 
+            ? `DISPONIBLE EN ${formatearTiempo(tiempoRestante)}` 
+            : (cargando ? "ABRIENDO..." : "ABRIR SOBRE COMÚN 📦")}
         </button>
       </header>
 
-      {/* 3. Sección de Colección */}
       <section className="collection-section">
-        <h2>Últimos hallazgos</h2>
+        <h2>Mejor valoradas</h2>
         <div className="cartas-grid">
-          {misCartas.map((c, index) => (
-            <Carta key={index} {...c} />
+           {/* Aquí se mostrarán las cartas más usadas */}
+        </div>
+      </section>
+
+      <section className="collections-grid-section">
+        <h2>Tus Colecciones</h2>
+        <div className="collections-grid">
+          {colecciones.map(col => (
+            <Link to={`/coleccion/${col.id}`} key={col.id} className="collection-card">
+              {/* AQUÍ ESTÁ EL CAMBIO: Usamos la etiqueta <img> */}
+              <img src={col.img} alt={col.nombre} className="collection-image" />
+              <div className="collection-info">
+                <h3>{col.nombre}</h3>
+                <p>{col.actuales}/{col.total} cartas</p>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
-      
     </main>
   );
 }
