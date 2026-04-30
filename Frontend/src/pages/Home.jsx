@@ -1,7 +1,8 @@
 import React, { useState } from 'react'; 
 import Carta from '../components/Carta.jsx'; 
+import Sidebar from '../components/Sidebar'; // <-- Esto faltaba
 
-function App() {
+function Home() { // <-- Cambiado de App a Home
   const [misCartas, setMisCartas] = useState([]);
   const [cargando, setCargando] = useState(false);
 
@@ -25,10 +26,8 @@ function App() {
 
   return (
     <div className="app-layout">
-      {/* 1. Barra Lateral Fija */}
       <Sidebar />
 
-      {/* 2. Contenido Principal */}
       <main className="main-content">
         <header className="main-header">
           <div className="header-info">
@@ -45,7 +44,6 @@ function App() {
           </button>
         </header>
 
-        {/* 3. Rejilla de Cartas */}
         <section className="cartas-container">
           <div className="cartas-grid">
             {misCartas.map((c, index) => (
@@ -58,4 +56,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home; // <-- Cambiado el export
