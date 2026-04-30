@@ -14,28 +14,28 @@ function Home() {
       nombre: "Boku no hero coleccion", 
       total: 30, 
       actuales: 0, 
-      img: "/assets/colecciones/coleccion1.jpg" 
+      img: "/assets/colecciones/coleccion1.png" 
     },
     { 
       id: 2, 
       nombre: "Isa colecttion", 
       total: 20, 
       actuales: 0, 
-      img: "/assets/colecciones/coleccion2.jpg" 
+      img: "/assets/colecciones/coleccion2.png" 
     },
     { 
       id: 3, 
       nombre: "Ana colecttion", 
       total: 20, 
       actuales: 0, 
-      img: "/assets/colecciones/coleccion3.jpg" 
+      img: "/assets/colecciones/coleccion3.png" 
     },
     { 
       id: 4, 
       nombre: "Jhons Randoms", 
       total: 30, 
       actuales: 0, 
-      img: "/assets/colecciones/coleccion4.jpg" 
+      img: "/assets/colecciones/coleccion4.png" 
     }
   ];
 
