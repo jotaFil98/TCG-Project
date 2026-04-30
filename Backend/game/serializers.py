@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Carta # Asegúrate de importar tu modelo Carta
+from .models import Carta # Asegúrate de importar tu modelo Carta
 
 class CartaSerializer(serializers.ModelSerializer):
     class Meta:
