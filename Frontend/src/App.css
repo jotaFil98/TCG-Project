@@ -268,49 +268,43 @@ body {
   background: #ffcc00;
   color: #000;
 }
-/* DISEÑO DE COLECCIONES */
-.collections-grid-section {
-  margin-top: 50px;
-}
-
+/* Contenedor del Grid */
 .collections-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+  padding: 10px;
 }
 
+/* Tarjeta de cada colección */
 .collection-card {
-  background: rgba(26, 29, 35, 0.8);
+  background: #1a1d23;
   border: 1px solid #2d3139;
   border-radius: 12px;
-  padding: 15px;
   text-decoration: none;
   color: white;
   transition: all 0.3s ease;
+  overflow: hidden; /* ¡ESTO ES LO MÁS IMPORTANTE! Corta lo que se salga */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Imagen de portada */
+.collection-image {
+  width: 100%;
+  height: 200px; /* Tamaño fijo para todas las portadas */
+  object-fit: cover; /* Recorta la imagen para que llene el espacio perfectamente */
   display: block;
 }
 
+/* Espacio para el texto abajo */
+.collection-info {
+  padding: 15px;
+}
+
+/* Efecto Hover */
 .collection-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
   border-color: #ffcc00;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
-
-.collection-img-placeholder {
-  width: 100%;
-  height: 150px;
-  background: #2d3139;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.collection-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 5px;
-}
-
-.collection-card p {
-  color: #94a3b8;
-  font-size: 0.9rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }

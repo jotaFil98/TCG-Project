@@ -94,17 +94,18 @@ function Home() {
       <section className="collections-grid-section">
         <h2>Tus Colecciones</h2>
         <div className="collections-grid">
-          {colecciones.map(col => (
-            <Link to={`/coleccion/${col.id}`} key={col.id} className="collection-card">
-              {/* AQUÍ ESTÁ EL CAMBIO: Usamos la etiqueta <img> */}
-              <img src={col.img} alt={col.nombre} className="collection-image" />
-              <div className="collection-info">
-                <h3>{col.nombre}</h3>
-                <p>{col.actuales}/{col.total} cartas</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+            {colecciones.map(col => (
+                <Link to={`/coleccion/${col.id}`} key={col.id} className="collection-card">
+                <img src={col.img} alt={col.nombre} className="collection-image" />
+                
+                {/* Todo el texto debe estar dentro de este div */}
+                <div className="collection-info">
+                    <h3>{col.nombre}</h3>
+                    <p>{col.actuales}/{col.total} cartas</p>
+                </div>
+                </Link>
+            ))}
+            </div>
       </section>
     </main>
   );
