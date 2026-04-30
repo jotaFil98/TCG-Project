@@ -1,6 +1,4 @@
 /* 1. CONFIGURACIÓN DEL LAYOUT PRINCIPAL */
-
-/* Esto elimina el margen blanco */
 * {
   margin: 0;
   padding: 0;
@@ -10,110 +8,134 @@
 body {
   background-color: #0f1115;
   overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  color: white;
 }
 
 .app-layout {
   display: flex;
   min-height: 100vh;
-  /* Mezclamos tu fondo radial con el tono oscuro de la referencia */
-  background: radial-gradient(circle, #1a1d23 0%, #0f1115 100%);
+  background: radial-gradient(circle at top right, #1a1d23 0%, #0f1115 100%);
   background-attachment: fixed;
-  color: white;
-  font-family: 'Inter', sans-serif;
 }
 
-/* RESPONSIVE: Esto va FUERA de .app-layout */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .app-layout {
-    flex-direction: column; /* Apila menú arriba, contenido abajo */
+    flex-direction: column;
   }
   .sidebar {
     width: 100%;
     height: auto;
-    border-right: none;
     border-bottom: 1px solid #2d3139;
   }
-  .main-content {
-    padding: 20px;
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
   }
 }
 
-/* 2. CONTENIDO PRINCIPAL (DERECHA) */
+/* 2. CONTENIDO PRINCIPAL */
 .main-content {
   flex: 1;
   padding: 40px;
   overflow-y: auto;
+}
+
+/* 3. BARRA DE ESTADÍSTICAS */
+.stats-bar {
+  background: rgba(26, 29, 35, 0.6);
+  padding: 15px 25px;
+  border-radius: 12px;
+  border: 1px solid #2d3139;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 30px;
+}
+
+.stat-item {
   display: flex;
   flex-direction: column;
 }
 
-/* 3. HEADER PROFESIONAL */
-.main-header {
+.stat-label {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* 4. SECCIÓN HERO (El Encabezado) */
+.hero-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  padding-bottom: 30px;
   border-bottom: 1px solid #2d3139;
-  padding-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-/* Tu estilo de título plateado aplicado al Dashboard */
-.header-info h1 {
+.hero-content h1 {
   letter-spacing: 3px;
   text-transform: uppercase;
   background: linear-gradient(to bottom, #ffffff, #888);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0;
   font-size: 2.5rem;
 }
 
-.header-info p {
+.hero-content p {
   color: #94a3b8;
   margin-top: 5px;
-  font-size: 0.9rem;
   letter-spacing: 1px;
 }
 
-/* 4. EL BOTÓN "ABRIR SOBRE" (Estilo referencia) */
-.boton-sobre {
-  background-color: #ffcc00; /* Amarillo neón de la referencia */
+/* 5. EL BOTÓN "ABRIR SOBRE" (Estilo Épico) */
+.boton-sobre-epic {
+  background: linear-gradient(135deg, #ffcc00, #d4ac0d);
   color: #000;
   border: none;
-  padding: 12px 28px;
-  font-weight: bold;
+  padding: 15px 30px;
+  font-weight: 800;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
   text-transform: uppercase;
+  font-size: 1rem;
 }
 
-.boton-sobre:hover {
-  background-color: #ffdb4d;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+.boton-sobre-epic:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 204, 0, 0.5);
 }
 
-.boton-sobre:disabled {
-  background-color: #2d3139;
+.boton-sobre-epic:disabled {
+  background: #2d3139;
   color: #64748b;
   cursor: not-allowed;
-  transform: none;
   box-shadow: none;
 }
 
-/* 5. GRID DE CARTAS (Ajustado para que se vea como en la web pro) */
+/* 6. GRID DE CARTAS */
+.collection-section h2 {
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  color: #e2e8f0;
+}
+
 .cartas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 30px;
   justify-items: center;
   width: 100%;
-}
-
-/* Eliminamos estilos de la clase .App vieja para evitar conflictos */
-.App {
-  text-align: center;
 }

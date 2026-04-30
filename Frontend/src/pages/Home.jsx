@@ -24,29 +24,42 @@ function Home() {
   };
 
   return (
-    <main className="main-content">
-      <header className="main-header">
-        <div className="header-info">
+    <main className="home-dashboard">
+      
+      {/* 1. Barra de Estadísticas (Nueva) */}
+      <div className="stats-bar">
+        <div className="stat-item">
+          <span className="stat-label">Cartas Coleccionadas</span>
+          <span className="stat-value">{misCartas.length}</span>
+        </div>
+      </div>
+
+      {/* 2. Sección Hero (El gancho) */}
+      <header className="hero-section">
+        <div className="hero-content">
           <h1>TCG COLLECTOR</h1>
-          <p>Gestiona tu colección y prepárate para el combate</p>
+          <p>Gestiona tu colección y prepárate para el combate.</p>
         </div>
         
         <button 
           onClick={abrirSobre} 
-          className="boton-sobre"
+          className="boton-sobre-epic"
           disabled={cargando}
         >
           {cargando ? "ABRIENDO..." : "ABRIR SOBRE (3 CARTAS) 📦"}
         </button>
       </header>
 
-      <section className="cartas-container">
+      {/* 3. Sección de Colección */}
+      <section className="collection-section">
+        <h2>Últimos hallazgos</h2>
         <div className="cartas-grid">
           {misCartas.map((c, index) => (
             <Carta key={index} {...c} />
           ))}
         </div>
       </section>
+      
     </main>
   );
 }
