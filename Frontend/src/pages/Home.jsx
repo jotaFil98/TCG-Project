@@ -47,6 +47,23 @@ function Home() {
     }, 2000);
   };
 
+    // Agrega estos estados junto a tus otros useState
+    const [isOpening, setIsOpening] = useState(false);
+    const [cartasRecibidas, setCartasRecibidas] = useState([]);
+
+    // Modifica tu función abrirSobre para simular la apertura
+    const abrirSobre = () => {
+    setCargando(true);
+    
+    // Simulamos que recibimos 4 cartas después de 2 segundos
+    setTimeout(() => {
+        setCargando(false);
+        setIsOpening(true); // Abrimos el modal
+        setCartasRecibidas([1, 2, 3, 4]); // Aquí luego pondrás tus cartas reales
+        setTiempoRestante(300);
+    }, 2000);
+    };
+
   useEffect(() => {
     if (tiempoRestante > 0) {
       const timer = setInterval(() => setTiempoRestante(t => t - 1), 1000);
@@ -107,6 +124,28 @@ function Home() {
             ))}
             </div>
       </section>
+      {isOpening && (
+        <div className="pack-overlay">
+            <div className="pack-modal">
+            <h2>¡Nuevo sobre abierto!</h2>
+            <div className="pack-slots">
+                {cartasRecibidas.map((c, index) => (
+                <div key={index} className="card-slot">
+                    {/* Aquí luego pondrás el componente <Carta /> */}
+                    ?
+                </div>
+        ))}
+            </div>
+            <button 
+                className="boton-cerrar" 
+                style={{marginTop: '30px'}}
+                onClick={() => setIsOpening(false)}
+            >
+                Guardar en colección
+            </button>
+            </div>
+        </div>
+        )}
     </main>
   );
 }
