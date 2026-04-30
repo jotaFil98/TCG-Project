@@ -1,8 +1,7 @@
 import React, { useState } from 'react'; 
 import Carta from '../components/Carta.jsx'; 
-import Sidebar from '../components/Sidebar'; // <-- Esto faltaba
 
-function Home() { // <-- Cambiado de App a Home
+function Home() {
   const [misCartas, setMisCartas] = useState([]);
   const [cargando, setCargando] = useState(false);
 
@@ -25,35 +24,31 @@ function Home() { // <-- Cambiado de App a Home
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar />
+    <main className="main-content">
+      <header className="main-header">
+        <div className="header-info">
+          <h1>TCG COLLECTOR</h1>
+          <p>Gestiona tu colección y prepárate para el combate</p>
+        </div>
+        
+        <button 
+          onClick={abrirSobre} 
+          className="boton-sobre"
+          disabled={cargando}
+        >
+          {cargando ? "ABRIENDO..." : "ABRIR SOBRE (3 CARTAS) 📦"}
+        </button>
+      </header>
 
-      <main className="main-content">
-        <header className="main-header">
-          <div className="header-info">
-            <h1>TCG COLLECTOR</h1>
-            <p>Gestiona tu colección y prepárate para el combate</p>
-          </div>
-          
-          <button 
-            onClick={abrirSobre} 
-            className="boton-sobre"
-            disabled={cargando}
-          >
-            {cargando ? "ABRIENDO..." : "ABRIR SOBRE (3 CARTAS) 📦"}
-          </button>
-        </header>
-
-        <section className="cartas-container">
-          <div className="cartas-grid">
-            {misCartas.map((c, index) => (
-              <Carta key={index} {...c} />
-            ))}
-          </div>
-        </section>
-      </main>
-    </div>
+      <section className="cartas-container">
+        <div className="cartas-grid">
+          {misCartas.map((c, index) => (
+            <Carta key={index} {...c} />
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
 
-export default Home; // <-- Cambiado el export
+export default Home;
