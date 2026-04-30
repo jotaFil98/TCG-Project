@@ -22,13 +22,6 @@ def listar_cartas(request):
     serializer = CartaSerializer(todas, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def listar_cartas(request):
-    cartas = Carta.objects.all()
-    serializer = CartaSerializer(cartas, many=True)
-    return Response(serializer.data)
-
-
 
 def obtener_cartas_aleatorias(request):
     # Traemos todas las cartas que registraste en el Admin
