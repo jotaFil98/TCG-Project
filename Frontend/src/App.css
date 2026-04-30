@@ -204,3 +204,67 @@ body {
   color: #ffcc00;
   margin-top: 10px;
 }
+/* DISEÑO DE LA TIENDA */
+.shop-dashboard {
+  padding: 40px;
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #2d3139;
+  padding-bottom: 20px;
+}
+
+.wallet {
+  background: #1a1d23;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.product-card {
+  background: rgba(26, 29, 35, 0.6);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #2d3139;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  border-color: #ffcc00;
+}
+
+.price-tag {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 20px 0;
+  color: white;
+}
+
+.boton-buy {
+  background: transparent;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  padding: 10px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.boton-buy:hover {
+  background: #ffcc00;
+  color: #000;
+}
