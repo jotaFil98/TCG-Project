@@ -1,5 +1,13 @@
-import dj_database_url  
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Esto carga las variables del archivo .env
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 """
 
 Django settings for core project.
@@ -83,14 +91,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        # Esto buscará la variable DATABASE_URL en Render. 
-        # Si no la encuentra (como en tu PC local), usará SQLite para que no se rompa nada.
-        default=os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')),
-        conn_max_age=600
-    )
+    'default': dj_database_url.parse("postgresql://tcg_project_user:6rytxtf7nZ6sZQS1daiiJsohdtyIkSo1@dpg-d7oj0l9o3t8c73fn8rfg-a.oregon-postgres.render.com/tcg_project")
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
