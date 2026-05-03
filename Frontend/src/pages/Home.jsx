@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Carta from '../components/Carta.jsx';
+import axios from 'axios';
+
+// Esta es la URL de tu API en Render
+const API_URL = 'https://tcg-project.onrender.com';
 
 function Home() {
     // Estado persistente: Se carga de localStorage al iniciar
@@ -31,12 +35,14 @@ function Home() {
         { id: 4, nombre: "Jhons Randoms", total: 30, actuales: 0, img: "/assets/colecciones/coleccion4.png" }
     ];
 
-    const abrirSobre = () => {
-        // Validar créditos
-        if (gameData.credits < 100) {
-            alert("¡No tienes suficientes créditos!");
-            return;
-        }
+    const abrirSobre = async () => { // Agregamos 'async' aquí
+    // Probemos si el servidor responde
+    try {
+        const respuesta = await axios.get(`${API_URL}/api/tu-endpoint-de-prueba/`);
+        console.log("¡El servidor respondió!", respuesta.data);
+    } catch (error) {
+        console.error("No pudimos conectar con el servidor:", error);
+    }
 
         setCargando(true);
         setTimeout(() => {
