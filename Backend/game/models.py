@@ -1,14 +1,12 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings  # Importante para referenciar tu CustomUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # --- 1. MODELO DE PERFIL (Economía y Progreso) ---
 class Perfil(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    # Usamos settings.AUTH_USER_MODEL en lugar de User
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='perfil')
     usuario_id_game = models.CharField(max_length=20, unique=True)
     monedas = models.IntegerField(default=500)  # Monedas iniciales
     diamantes = models.IntegerField(default=10) # Diamantes iniciales
@@ -16,6 +14,7 @@ class Perfil(models.Model):
     xp = models.IntegerField(default=0)
 
     def __str__(self):
+        # Como es un CustomUser, 'username' sigue existiendo
         return f"Perfil de {self.usuario.username} - ID: {self.usuario_id_game}"
 
 # --- 2. MODELO DE CARTA MAESTRA ---
@@ -78,9 +77,9 @@ class Mazo(models.Model):
         return f"Mazo: {self.nombre_mazo} de {self.perfil.usuario.username}"
 
 # --- SEÑALES PARA CREAR PERFIL AUTOMÁTICAMENTE ---
-@receiver(post_save, sender=User)
+# IMPORTANTE: El sender ahora es settings.AUTH_USER_MODEL
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def crear_perfil_usuario(sender, instance, created, **kwargs):
     if created:
-        # Generar un ID simple basado en el nombre
         id_random = f"{instance.username}#{instance.id}"
         Perfil.objects.create(usuario=instance, usuario_id_game=id_random)

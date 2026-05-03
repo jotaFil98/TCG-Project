@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ['tcg-project.onrender.com', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'game',
     'corsheaders',
     'django.contrib.admin',
@@ -130,3 +131,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+AUTH_USER_MODEL = 'users.CustomUser'
