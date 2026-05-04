@@ -432,36 +432,46 @@ body {
     background-color: #f8f9fa; /* Fondo gris claro suave */
 }
 
-/* --- Estilos para Login y Registro --- */
+/* Sobreescribimos el estilo del Login/Register para que sea Dark */
 .auth-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh; /* Ocupa casi toda la altura disponible */
+    min-height: 80vh;
+    width: 100%;
 }
 
 .auth-card {
-    background: white;
+    background: #1a1d23; /* Usamos el color de tu gradiente */
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra más oscura */
     width: 100%;
     max-width: 400px;
     text-align: center;
+    border: 1px solid #2c313a; /* Un borde sutil para que resalte */
 }
 
 .auth-card h2 {
     margin-bottom: 1.5rem;
-    color: #2c3e50;
+    color: white; /* Texto blanco */
 }
 
 .auth-input {
     width: 100%;
     padding: 12px;
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #333; /* Borde oscuro */
     border-radius: 6px;
-    box-sizing: border-box; /* Fundamental para que el padding no desborde */
+    background-color: #0f1115; /* El color de tu body */
+    color: white; /* Texto dentro del input blanco */
+    box-sizing: border-box;
+}
+
+/* Cuando haces clic en el input, un pequeño cambio de borde */
+.auth-input:focus {
+    outline: none;
+    border-color: #3498db;
 }
 
 .auth-button {
@@ -478,11 +488,4 @@ body {
 
 .auth-button:hover {
     background-color: #2980b9;
-}
-
-/* Cuando ocultamos el sidebar, la clase full-width asegura que el contenido ocupe todo el espacio */
-.full-width {
-    width: 100%;
-    margin-left: 0;
-    padding: 0;
 }
