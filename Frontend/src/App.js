@@ -33,7 +33,7 @@ function AppContent() {
           <Route path="/register" element={<Register />} />
         </Routes>
       </main>
-    </div>
+    </div> 
   );
 }
 
