@@ -3,29 +3,21 @@ import { Link } from 'react-router-dom'; // 1. Importamos Link
 import { Home, User, ShoppingCart, Sword, Settings } from 'lucide-react';
 import './Sidebar.css';
 
+import { useNavigate } from 'react-router-dom';
+
 const Sidebar = () => {
+  const navigate = useNavigate(); // Mueve el hook aquí
+
   return (
     <aside className="sidebar">
-      <div className="sidebar-logo">
-        <span className="logo-icon">⚡</span>
-        <span className="logo-text">TCG PROJECT</span>
-      </div>
+      {/* ... tu logo y nav existente ... */}
       
-      <nav className="sidebar-nav">
-        {/* 2. Cambiamos 'button' por 'Link' y usamos 'to' en lugar de onClick */}
-        <Link to="/" className="nav-item active">
-            <Home size={20}/> <span>Inicio</span>
-        </Link>
-        <Link to="/perfil" className="nav-item">
-            <User size={20}/> <span>Perfil</span>
-        </Link>
-        <Link to="/tienda" className="nav-item">
-            <ShoppingCart size={20}/> <span>Tienda</span>
-        </Link>
-        <Link to="/batalla" className="nav-item">
-            <Sword size={20}/> <span>Combate</span>
-        </Link>
-      </nav>
+      {/* --- AÑADE ESTO PARA TESTEAR --- */}
+      <div style={{ marginTop: '20px', padding: '10px' }}>
+          <button onClick={() => navigate('/login')}>Ir a Login</button>
+          <button onClick={() => navigate('/register')}>Ir a Registro</button>
+      </div>
+      {/* ------------------------------- */}
 
       <div className="sidebar-footer">
         <Link to="/ajustes" className="nav-item">
