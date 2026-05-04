@@ -1,50 +1,49 @@
-from django.shortcuts import render
-
-from django.http import JsonResponse
+from django.db import transaction
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from .models import Carta
 import random
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .models import Carta
-from .serializers import CartaSerializer
-from django.db import connection # Agrega esto arriba con los otros imports
-
-@api_view(['GET'])
-def listar_cartas(request):
-    # 1. Ver qué tablas ve Django en la base de datos
-    print("DEBUG TABLAS:", connection.introspection.table_names())
+@api_view(['POST']) # Usamos POST porque estamos modificando datos
+@permission_classes([IsAuthenticated]) # Solo usuarios logueados pueden abrir sobres
+def abrir_sobre(request):
+    user = request.user
     
-    # 2. Ver cuántas cartas hay realmente
-    todas = Carta.objects.all()
-    print("DEBUG CANTIDAD:", todas.count())
-    
-    serializer = CartaSerializer(todas, many=True)
-    return Response(serializer.data)
+    # 1. Verificar créditos
+    if user.credits < 100:
+        return Response({"error": "No tienes suficientes créditos"}, status=400)
 
-
-def obtener_cartas_aleatorias(request):
-    # Traemos todas las cartas que registraste en el Admin
+    # 2. Verificar que haya cartas disponibles
     todas_las_cartas = list(Carta.objects.all())
-    
-    # Si no hay cartas, mandamos un error amigable
-    if not todas_las_cartas:
-        return JsonResponse({"error": "No hay cartas en la base de datos"}, status=404)
-    
-    # Seleccionamos 3 cartas al azar (o las que quieras)
-    cantidad = min(len(todas_las_cartas), 3)
-    cartas_random = random.sample(todas_las_cartas, cantidad)
-    
-    # Formateamos los datos para que React los entienda
-    data = []
-    for carta in cartas_random:
-        data.append({
-            "id": carta.id,
-            "nombre": carta.nombre,
-            "rareza": carta.rareza,
-            "imagen_url": carta.imagen_url, # Aquí irá lo de /cartas/nombre.png
-            "atk": carta.atk,
-            "hp": carta.hp,
-        })
-    
-    return JsonResponse(data, safe=False)
+    if len(todas_las_cartas) < 4:
+        return Response({"error": "No hay suficientes cartas en la base de datos"}, status=404)
+
+    # 3. Lógica segura con transacción (si algo falla, se cancela todo)
+    with transaction.atomic():
+        # Descontar créditos
+        user.credits -= 100
+        user.save()
+
+        # Seleccionar 4 cartas al azar
+        cartas_ganadas = random.sample(todas_las_cartas, 4)
+
+        # Preparar respuesta
+        data = []
+        for carta in cartas_ganadas:
+            data.append({
+                "id": carta.id,
+                "nombre": carta.nombre,
+                "rareza": carta.rareza,
+                "imagen_url": str(carta.imagen_url), # Aseguramos que sea string
+                "atk": carta.atk,
+                "hp": carta.hp,
+            })
+            # Opcional: Aquí podrías añadir las cartas al inventario del usuario
+            # user.collection.add(carta) 
+
+    return Response({
+        "mensaje": "¡Sobre abierto con éxito!",
+        "nuevo_saldo": user.credits,
+        "cartas": data
+    })

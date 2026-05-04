@@ -35,14 +35,22 @@ function Home() {
         { id: 4, nombre: "Jhons Randoms", total: 30, actuales: 0, img: "/assets/colecciones/coleccion4.png" }
     ];
 
-    const abrirSobre = async () => { // Agregamos 'async' aquí
-    // Probemos si el servidor responde
+    const abrirSobre = async () => {
     try {
-        const respuesta = await axios.get(`${API_URL}/api/tu-endpoint-de-prueba/`);
-        console.log("¡El servidor respondió!", respuesta.data);
+        // Necesitarás enviar el token de autenticación si ya lo tienes configurado
+        const response = await axios.post(`${API_URL}/api/abrir-sobre/`, {}, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}` // Si usas JWT
+            }
+        });
+        
+        console.log("Cartas ganadas:", response.data.cartas);
+        // Aquí actualizas tu estado de React con response.data.cartas
+        
     } catch (error) {
-        console.error("No pudimos conectar con el servidor:", error);
+        console.error("Error al abrir sobre:", error.response?.data || error.message);
     }
+};
 
         setCargando(true);
         setTimeout(() => {
