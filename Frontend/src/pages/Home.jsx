@@ -36,19 +36,37 @@ function Home() {
     ];
 
     const abrirSobre = async () => {
+    setCargando(true); // Indicamos que estamos cargando
+
     try {
-        // Necesitarás enviar el token de autenticación si ya lo tienes configurado
+        // 1. Llamada al servidor
         const response = await axios.post(`${API_URL}/api/abrir-sobre/`, {}, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}` // Si usas JWT
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         });
-        
-        console.log("Cartas ganadas:", response.data.cartas);
-        // Aquí actualizas tu estado de React con response.data.cartas
-        
+
+        // 2. Si todo sale bien, procesamos los datos que nos mandó Django
+        console.log("Cartas ganadas del servidor:", response.data.cartas);
+
+        // 3. Actualizamos el estado con los datos reales del servidor
+        // Nota: Asumo que el servidor te devuelve 'nuevo_saldo' y las 'cartas'
+        setGameData(prev => ({
+            ...prev,
+            credits: response.data.nuevo_saldo, // Actualizamos con el saldo real del servidor
+            xp: prev.xp + 10, 
+            collection: [...prev.collection, ...response.data.cartas] 
+        }));
+
+        setCartasRecibidas(response.data.cartas); // Guardamos las cartas reales
+        setTiempoRestante(300); // Iniciamos el cooldown
+        setIsOpening(true); // Abrimos el modal
+
     } catch (error) {
         console.error("Error al abrir sobre:", error.response?.data || error.message);
+        alert("Hubo un error al abrir el sobre. Verifica tu conexión.");
+    } finally {
+        setCargando(false); // Siempre quitamos el estado de carga al terminar
     }
 };
 
@@ -170,6 +188,6 @@ function Home() {
             )}
         </main>
     );
-}
+ 
 
 export default Home;
