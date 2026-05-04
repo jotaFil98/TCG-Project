@@ -9,17 +9,20 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(`${API_URL}/api/token/`, credentials);
-            // Aquí guardamos el token que te dará Django
-            localStorage.setItem('token', response.data.access);
-            alert("¡Login exitoso!");
-            navigate('/'); // Te redirige al Home
-        } catch (error) {
-            alert("Credenciales incorrectas");
-        }
-    };
+    e.preventDefault();
+    try {
+        // Asegúrate de que la ruta coincida con lo que acabamos de configurar
+        const response = await axios.post(`${API_URL}/api/users/login/`, credentials);
+        
+        localStorage.setItem('token', response.data.access);
+        localStorage.setItem('refresh', response.data.refresh); // Guarda también el refresh
+        
+        alert("¡Login exitoso!");
+        navigate('/');
+    } catch (error) {
+        alert("Credenciales incorrectas");
+    }
+};
 
     return (
         <div className="login-container">
