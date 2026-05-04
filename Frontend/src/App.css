@@ -429,7 +429,7 @@ body {
 .main-content {
     flex: 1;
     padding: 20px;
-    background-color: #f8f9fa; /* Fondo gris claro suave */
+    background-color: #0f1115; /* Fondo gris claro suave */
 }
 
 /* Sobreescribimos el estilo del Login/Register para que sea Dark */
@@ -491,43 +491,3 @@ body {
 }
 
 
-/* --- FORZAR TEMA OSCURO EN AUTH --- */
-
-/* 1. Aseguramos que el contenedor general de Auth sea oscuro */
-.auth-wrapper {
-    background-color: #0f1115 !important;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-/* 2. La tarjeta de login */
-.auth-card {
-    background: #1a1d23 !important; /* Color de tu gradiente */
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    border: 1px solid #2c313a;
-    color: white !important; /* Forzamos texto blanco */
-}
-
-/* 3. Inputs para que se vean bien en modo oscuro */
-.auth-input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 1rem;
-    border: 1px solid #333 !important;
-    border-radius: 6px;
-    background-color: #0f1115 !important;
-    color: white !important;
-}
-
-/* 4. Aseguramos que el contenido principal también sea oscuro si es full-width */
-.main-content.full-width {
-    background-color: #0f1115 !important;
-}
