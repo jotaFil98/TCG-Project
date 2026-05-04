@@ -420,3 +420,69 @@ body {
   transform: rotateY(180deg);
   color: black;
 }
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo gris claro suave */
+}
+
+/* --- Estilos para Login y Registro --- */
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Ocupa casi toda la altura disponible */
+}
+
+.auth-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-card h2 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Fundamental para que el padding no desborde */
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-button:hover {
+    background-color: #2980b9;
+}
+
+/* Cuando ocultamos el sidebar, la clase full-width asegura que el contenido ocupe todo el espacio */
+.full-width {
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+}
