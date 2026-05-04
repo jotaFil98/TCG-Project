@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Perfil from './pages/Perfil';
 import Tienda from './pages/Tienda';
 import BatallaMenu from './pages/BatallaMenu';
+import Login from './pages/Login';    // Nueva importación
+import Register from './pages/Register'; // Nueva importación
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/tienda" element={<Tienda />} />
             <Route path="/batalla" element={<BatallaMenu />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
       </div>
