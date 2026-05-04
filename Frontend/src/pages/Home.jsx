@@ -23,12 +23,10 @@ function Home() {
     const [flipped, setFlipped] = useState([false, false, false, false]);
 
     // --- EFECTOS ---
-    // Guardado automático
     useEffect(() => {
         localStorage.setItem('tcgGameData', JSON.stringify(gameData));
     }, [gameData]);
 
-    // Timer para el cooldown
     useEffect(() => {
         if (tiempoRestante > 0) {
             const timer = setInterval(() => setTiempoRestante(t => t - 1), 1000);
@@ -46,26 +44,21 @@ function Home() {
 
     const abrirSobre = async () => {
         setCargando(true); 
-
         try {
             const response = await axios.post(`${API_URL}/api/abrir-sobre/`, {}, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
-
-            // Actualizamos estado con datos reales del backend
             setGameData(prev => ({
                 ...prev,
                 credits: response.data.nuevo_saldo,
                 xp: prev.xp + 10, 
                 collection: [...prev.collection, ...response.data.cartas] 
             }));
-
             setCartasRecibidas(response.data.cartas); 
-            setTiempoRestante(300); // 5 minutos de cooldown
+            setTiempoRestante(300); 
             setIsOpening(true); 
-
         } catch (error) {
             console.error("Error al abrir sobre:", error.response?.data || error.message);
             alert("Error al abrir sobre. Revisa tu conexión o créditos.");
@@ -113,19 +106,32 @@ function Home() {
                 </button>
             </header>
 
+            {/* --- SECCIÓN DE COLECCIONES CON EMPTY STATE --- */}
             <section className="collections-grid-section">
                 <h2>Tus Colecciones</h2>
-                <div className="collections-grid">
-                    {colecciones.map(col => (
-                        <Link to={`/coleccion/${col.id}`} key={col.id} className="collection-card">
-                            <img src={col.img} alt={col.nombre} className="collection-image" />
-                            <div className="collection-info">
-                                <h3>{col.nombre}</h3>
-                                <p>{col.actuales}/{col.total} cartas</p>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                
+                {colecciones.length > 0 ? (
+                    <div className="collections-grid">
+                        {colecciones.map(col => (
+                            <Link to={`/coleccion/${col.id}`} key={col.id} className="collection-card">
+                                <img src={col.img} alt={col.nombre} className="collection-image" />
+                                <div className="collection-info">
+                                    <h3>{col.nombre}</h3>
+                                    <p>{col.actuales}/{col.total} cartas</p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="empty-state">
+                        <div className="empty-state-icon">🃏</div>
+                        <h3>¡Tu colección está vacía!</h3>
+                        <p>Aún no has descubierto ninguna colección. ¡Abre un sobre y empieza tu leyenda!</p>
+                        <button className="btn-explore" onClick={() => window.location.href='/tienda'}>
+                            Ir a la Tienda
+                        </button>
+                    </div>
+                )}
             </section>
 
             {isOpening && (
@@ -146,7 +152,6 @@ function Home() {
                                 </div>
                             ))}
                         </div>
-
                         <button
                             className="btn-save-collection"
                             onClick={() => { setIsOpening(false); setFlipped([false, false, false, false]); }}

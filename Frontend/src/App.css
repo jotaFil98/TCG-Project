@@ -494,3 +494,45 @@ body {
     background-color: #2980b9;
 }
 
+
+/* --- EMPTY STATE DESIGN --- */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: #1a1d23;
+    border: 2px dashed #2c313a;
+    border-radius: 12px;
+    color: #a0a0a0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.empty-state h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.btn-explore {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-explore:hover {
+    background-color: #2980b9;
+}
