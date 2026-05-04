@@ -432,43 +432,47 @@ body {
     background-color: #0f1115; /* Fondo gris claro suave */
 }
 
-/* Sobreescribimos el estilo del Login/Register para que sea Dark */
+
+/* --- ESTILOS DE LOGIN Y REGISTRO (AÑADIR AL FINAL) --- */
+
 .auth-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 80vh;
     width: 100%;
+    padding: 20px;
+    background-color: transparent; /* Hereda el fondo del contenedor padre */
 }
 
 .auth-card {
-    background: #1a1d23; /* Usamos el color de tu gradiente */
+    background: #1a1d23; /* Mismo tono que tu gradiente */
     padding: 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra más oscura */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     width: 100%;
     max-width: 400px;
     text-align: center;
-    border: 1px solid #2c313a; /* Un borde sutil para que resalte */
+    border: 1px solid #2c313a;
+    color: white;
 }
 
 .auth-card h2 {
     margin-bottom: 1.5rem;
-    color: white; /* Texto blanco */
+    color: white;
 }
 
 .auth-input {
     width: 100%;
     padding: 12px;
     margin-bottom: 1rem;
-    border: 1px solid #333; /* Borde oscuro */
+    border: 1px solid #333;
     border-radius: 6px;
-    background-color: #0f1115; /* El color de tu body */
-    color: white; /* Texto dentro del input blanco */
+    background-color: #0f1115; /* Fondo del input oscuro */
+    color: white;
     box-sizing: border-box;
 }
 
-/* Cuando haces clic en el input, un pequeño cambio de borde */
 .auth-input:focus {
     outline: none;
     border-color: #3498db;
@@ -489,5 +493,4 @@ body {
 .auth-button:hover {
     background-color: #2980b9;
 }
-
 
