@@ -1,4 +1,6 @@
 import React from 'react';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Sidebar from './components/Sidebar';
@@ -6,8 +8,7 @@ import Home from './pages/Home';
 import Perfil from './pages/Perfil';
 import Tienda from './pages/Tienda';
 import BatallaMenu from './pages/BatallaMenu';
-import Login from './pages/Login';
-import Register from './pages/Register';
+
 
 // Este componente contiene la lógica de rutas y sidebar
 function AppContent() {
