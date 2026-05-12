@@ -6,19 +6,27 @@ const API_URL = 'https://tcg-project.onrender.com';
 
 function Register() {
     const [formData, setFormData] = useState({ username: '', password: '', email: '' });
+    const [loading, setLoading] = useState(false); // Para deshabilitar el botón al enviar
     const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-            // FIX: Asegúrate de usar la ruta completa: /api/users/register/
             await axios.post(`${API_URL}/api/users/register/`, formData);
-            
             alert("¡Usuario registrado con éxito! Ahora puedes iniciar sesión.");
             navigate('/login');
         } catch (error) {
             console.error(error);
-            alert("Error al registrar: " + (error.response?.data?.message || "Revisa tus datos"));
+            // Captura errores específicos de Django si el usuario ya existe, etc.
+            const errorMsg = error.response?.data?.detail || error.response?.data?.message || "Revisa tus datos";
+            alert("Error al registrar: " + errorMsg);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -28,27 +36,36 @@ function Register() {
                 <h2>Crear Cuenta</h2>
                 <form onSubmit={handleRegister}>
                     <input 
+                        name="username"
                         className="auth-input"
                         type="text" 
                         placeholder="Usuario" 
-                        onChange={(e) => setFormData({...formData, username: e.target.value})} 
+                        onChange={handleChange} 
                         required 
                     />
                     <input 
+                        name="email"
                         className="auth-input"
                         type="email" 
                         placeholder="Email" 
-                        onChange={(e) => setFormData({...formData, email: e.target.value})} 
+                        onChange={handleChange} 
                         required 
                     />
                     <input 
+                        name="password"
                         className="auth-input"
                         type="password" 
                         placeholder="Contraseña" 
-                        onChange={(e) => setFormData({...formData, password: e.target.value})} 
+                        onChange={handleChange} 
                         required 
                     />
-                    <button className="auth-button" type="submit">Registrarse</button>
+                    <button 
+                        className="auth-button" 
+                        type="submit" 
+                        disabled={loading}
+                    >
+                        {loading ? "Registrando..." : "Registrarse"}
+                    </button>
                 </form>
             </div>
         </div>
