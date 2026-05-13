@@ -4,19 +4,27 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # --- 1. MODELO DE PERFIL (Economía y Progreso) ---
+# --- 1. MODELO DE PERFIL (Economía y Progreso) ---
 class Perfil(models.Model):
-    # Usamos settings.AUTH_USER_MODEL en lugar de User
     usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='perfil')
     usuario_id_game = models.CharField(max_length=20, unique=True)
-    monedas = models.IntegerField(default=500)  # Monedas iniciales
-    diamantes = models.IntegerField(default=10) # Diamantes iniciales
+    creditos = models.IntegerField(default=500)  # Unificamos a créditos
+    diamantes = models.IntegerField(default=10) 
     nivel = models.IntegerField(default=1)
     xp = models.IntegerField(default=0)
 
     def __str__(self):
-        # Como es un CustomUser, 'username' sigue existiendo
-        return f"Perfil de {self.usuario.username} - ID: {self.usuario_id_game}"
+        return f"Perfil de {self.usuario.username} - Nivel: {self.nivel}"
 
+# --- SEÑALES PARA CREAR PERFIL AUTOMÁTICAMENTE ---
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def crear_perfil_usuario(sender, instance, created, **kwargs):
+    if created:
+        # Esto crea el perfil apenas te registras con el código que ya probamos
+        id_random = f"{instance.username}#{instance.id}"
+        Perfil.objects.create(usuario=instance, usuario_id_game=id_random)
+
+        
 # --- 2. MODELO DE CARTA MAESTRA ---
 class Carta(models.Model):
     # Opciones de Rareza
