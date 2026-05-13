@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const API_URL = 'https://tcg-project.onrender.com';
 
 function Register() {
     const [formData, setFormData] = useState({ username: '', password: '', email: '' });
-    const [loading, setLoading] = useState(false); // Para deshabilitar el botón al enviar
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -22,9 +22,20 @@ function Register() {
             navigate('/login');
         } catch (error) {
             console.error(error);
-            // Captura errores específicos de Django si el usuario ya existe, etc.
-            const errorMsg = error.response?.data?.detail || error.response?.data?.message || "Revisa tus datos";
-            alert("Error al registrar: " + errorMsg);
+            // --- MEJORA: Capturamos los errores específicos de Django ---
+            let errorMsg = "Error al registrar:";
+            const serverErrors = error.response?.data;
+
+            if (serverErrors) {
+                // Si el error es un objeto, recorremos los campos (password, username, etc.)
+                Object.keys(serverErrors).forEach(field => {
+                    errorMsg += `\n- ${field}: ${serverErrors[field].join(", ")}`;
+                });
+            } else {
+                errorMsg = "Revisa tu conexión o los datos ingresados.";
+            }
+            
+            alert(errorMsg);
         } finally {
             setLoading(false);
         }
@@ -59,6 +70,14 @@ function Register() {
                         onChange={handleChange} 
                         required 
                     />
+                    
+                    {/* --- TEXTO DE AYUDA PARA EL USUARIO --- */}
+                    <ul style={{ color: '#ccc', fontSize: '0.75rem', textAlign: 'left', marginBottom: '15px' }}>
+                        <li>Mínimo 8 caracteres.</li>
+                        <li>No puede ser solo números.</li>
+                        <li>No puede ser igual a tu nombre de usuario.</li>
+                    </ul>
+
                     <button 
                         className="auth-button" 
                         type="submit" 
@@ -67,6 +86,15 @@ function Register() {
                         {loading ? "Registrando..." : "Registrarse"}
                     </button>
                 </form>
+
+                <div className="auth-footer" style={{ marginTop: '20px', textAlign: 'center' }}>
+                    <p style={{ color: 'white', fontSize: '0.9rem' }}>
+                        ¿Ya tienes cuenta? {' '}
+                        <Link to="/login" style={{ color: '#3498db', fontWeight: 'bold', textDecoration: 'none' }}>
+                            Inicia sesión
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     );
